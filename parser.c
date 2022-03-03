@@ -85,6 +85,8 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf %lf %lf %lf %lf", &x0, &y0, &z0, &x1, &y1, &z1);
 
       add_edge(edges, x0, y0, z0, x1, y1, z1);
+    } else if (strcmp(line, "ident") == 0){
+      ident(transform);
     }
   }
 }
