@@ -59,7 +59,16 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and X as the axis of rotation.
 ====================*/
 struct matrix * make_rotX(double theta) {
-  return NULL;
+  struct matrix * matrix = new_matrix(4,4);
+
+  ident(matrix);
+
+  matrix->m[1][1] = cos(M_PI * theta / 180);
+  matrix->m[1][2] = -1 * sin(M_PI * theta / 180);
+  matrix->m[2][1] = sin(M_PI * theta / 180);
+  matrix->m[2][2] = cos(M_PI * theta / 180);
+
+  return matrix;
 }
 
 /*======== struct matrix * make_rotY() ==========
