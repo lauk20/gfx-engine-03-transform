@@ -41,7 +41,15 @@ Returns: The translation matrix creates using x, y and z
 as the scale factors
 ====================*/
 struct matrix * make_scale(double x, double y, double z) {
-  return NULL;
+  struct matrix * matrix = new_matrix(4,4);
+
+  ident(matrix);
+
+  matrix->m[0][0] = x;
+  matrix->m[1][1] = y;
+  matrix->m[2][2] = z;
+
+  return matrix;
 }
 
 /*======== struct matrix * make_rotX() ==========
