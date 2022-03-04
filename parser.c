@@ -60,6 +60,10 @@ void parse_file ( char * filename,
   FILE *f;
   char line[256];
   clear_screen(s);
+  color c;
+  c.red = 255;
+  c.green = 255;
+  c.blue = 255;
 
   if ( strcmp(filename, "stdin") == 0 )
     f = stdin;
@@ -87,6 +91,56 @@ void parse_file ( char * filename,
       add_edge(edges, x0, y0, z0, x1, y1, z1);
     } else if (strcmp(line, "ident") == 0){
       ident(transform);
+    } else if (strcmp(line, "scale") == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      double sx = 0, sy = 0, sz = 0;
+
+      sscanf(line, "%lf %lf %lf", &sx, &sy, &sz);
+
+      matrix_mult(make_scale(sx, sy, sz), transform);
+    } else if (strcmp(line, "translate") == 0 || strcmp(line, "move") == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      double tx = 0, ty = 0, tz = 0;
+
+      sscanf(line, "%lf %lf %lf", &tx, &ty, &tz);
+
+      matrix_mult(make_translate(tx, ty, tz), transform);
+    } else if (strcmp(line, "rotate") == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      char axis;
+      double theta = 0;
+
+      sscanf(line, "%c %lf", &axis, &theta);
+
+      if (axis == 'x'){
+        matrix_mult(make_rotX(theta), transform);
+      } else if (axis == 'y'){
+        matrix_mult(make_rotY(theta), transform);
+      } else if (axis == 'z'){
+        matrix_mult(make_rotZ(theta), transform);
+      }
+    } else if (strcmp(line, "apply") == 0){
+      matrix_mult(transform, edges);
+    } else if (strcmp(line, "display") == 0){
+      clear_screen(s);
+      draw_lines(edges, s, c);
+      display(s);
+    } else if (strcmp(line, "save") == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      clear_screen(s);
+      draw_lines(edges, s, c);
+
+      char name[256];
+
+      sscanf(line, "%s", name);
+
+      save_extension(s, name);
+    } else if (strcmp(line, "quit") == 0){
+      break;
     }
   }
 }
