@@ -1,0 +1,39 @@
+line
+150 207 0 215 207 0
+line
+215 207 0 240 232 0
+line
+240 232 0 243 212 0
+line
+243 212 0 245 224 0
+line
+245 224 0 250 223 0
+line
+150 207 0 180 270 0
+line
+180 270 0 204 270 0
+line
+204 270 0 250 319 0
+ident
+move
+-200 -200 0
+apply
+ident
+rotate
+z 180
+apply
+ident
+move
+200 200 0
+apply
+mirror
+ident
+scale
+2 2 2
+apply
+ident
+move
+-50 -50 0
+apply
+save
+gallery.png
